@@ -1,30 +1,31 @@
-let table;
-let trafficCams;
-let bananaNumber;
+let trafficCamTable;
+let trafficCamImage;
+let allTrafficCamImages = [];
+let rImg;
+let carCrashesTable;
 
 function preload() {
-  // Load data from a file
-  table = loadTable("fruit.csv", "header");
-  trafficCams = loadTable("https://data.brla.gov/resource/6z6u-ts44.csv", "header");
+  trafficCamTable = loadTable('https://data.brla.gov/resource/6z6u-ts44.csv', 'header');
+  carCrashesTable = loadTable('https://data.brla.gov/resource/7wah-qncc.csv', 'header');
 }
 
 function setup() {
   createCanvas(400, 400);
-  print("fuit table has this many rows: " + table.getRowCount());
-  print("trafficCams table has this many rows: " + trafficCams.getRowCount());
-  appleNumber = table.get(0, "Consumed");
-  bananaNumber = table.get(1, "Consumed");
-  strawberryNumber = table.get(2, "Consumed");
+  trafficCamImage = loadImage(trafficCamTable.get(0, "image_view"));
 
-  print(bananaNumber);
+  for (let i = 0; i < trafficCamTable.getRowCount(); i++) {
+    let trafficCamImage = loadImage(trafficCamTable.get(i, "image_view"));
+    allTrafficCamImages.push(trafficCamImage);
+  }
+
+  rImg = int(random(allTrafficCamImages.length));
+
+  print(carCrashesTable.get(0, "first_road_surface"));
+
 }
 
 function draw() {
   background(220);
-  fill("green");
-  circle(width/5, height/2, appleNumber * 5);
-  fill("yellow");
-  circle(width/2, height/2, bananaNumber * 5);
-  fill("red");
-  circle(width/1.25, height/2, strawberryNumber * 5);
+  image(allTrafficCamImages[rImg], 0, 0);
+  ellipse(200, 200, 50, 50);
 }
