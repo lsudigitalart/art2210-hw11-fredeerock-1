@@ -1,31 +1,23 @@
-let citizenRequestTable, potholes = [];
-const lsuCoords = { latitude: 30.4133, longitude: -91.1800 };
-const cityBounds = { minLat: 30.3290, maxLat: 30.5838, minLon: -91.2805, maxLon: -91.0025 };
-const aspectRatio = (cityBounds.maxLon - cityBounds.minLon) / (cityBounds.maxLat - cityBounds.minLat);
+let citizenTable;
+let tallGrass;
+let minlat = 30.32379644486961
+let maxlat = 30.559260561666104
+let minlon = -91.22161341694176
+let maxlon = -91.00110703360933
 
 function preload() {
-  citizenRequestTable = loadTable("https://data.brla.gov/resource/7ixm-mnvx.csv", "header");
+  citizenTable = loadTable('311short.csv', 'header');
 }
 
 function setup() {
-  createCanvas(800, 800 / aspectRatio);
-  potholes = citizenRequestTable.findRows("POTHOLE", "typename");
-}
+  createCanvas(800, 800);
+  tallGrass = citizenTable.findRows('TALL GRASS', 'TYPE');
+  print(tallGrass);
 
-function draw() {
-  background(0);
-  noStroke();
-
-  fill(255, 255, 255, 100);
-  
-  for (let i = 0; i < potholes.length; i++) {
-    let x = map(potholes[i].obj.longitude, cityBounds.minLon, cityBounds.maxLon, 0, width);
-    let y = map(potholes[i].obj.latitude, cityBounds.minLat, cityBounds.maxLat, height, 0);
-    circle(x, y, 25);
+  for (let i = 0; i < tallGrass.length; i++) {
+    print(tallGrass[i].getNum('LATITUDE'));
+    print(tallGrass[i].getNum('LONGITUDE'));
+    // ellipse(x, y, 10, 10);
   }
 
-  let lsuX = map(lsuCoords.longitude, cityBounds.minLon, cityBounds.maxLon, 0, width);
-  let lsuY = map(lsuCoords.latitude, cityBounds.minLat, cityBounds.maxLat, height, 0);
-  fill(128, 0, 128);
-  circle(lsuX, lsuY, 25);
 }
