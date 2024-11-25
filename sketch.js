@@ -1,31 +1,31 @@
-let trafficCamTable;
-let trafficCamImage;
-let allTrafficCamImages = [];
-let rImg;
-let carCrashesTable;
+let citizenRequestTable, potholes = [];
+const lsuCoords = { latitude: 30.4133, longitude: -91.1800 };
+const cityBounds = { minLat: 30.3290, maxLat: 30.5838, minLon: -91.2805, maxLon: -91.0025 };
+const aspectRatio = (cityBounds.maxLon - cityBounds.minLon) / (cityBounds.maxLat - cityBounds.minLat);
 
 function preload() {
-  trafficCamTable = loadTable('https://data.brla.gov/resource/6z6u-ts44.csv', 'header');
-  carCrashesTable = loadTable('https://data.brla.gov/resource/7wah-qncc.csv', 'header');
+  citizenRequestTable = loadTable("https://data.brla.gov/resource/7ixm-mnvx.csv", "header");
 }
 
 function setup() {
-  createCanvas(400, 400);
-  trafficCamImage = loadImage(trafficCamTable.get(0, "image_view"));
-
-  for (let i = 0; i < trafficCamTable.getRowCount(); i++) {
-    let trafficCamImage = loadImage(trafficCamTable.get(i, "image_view"));
-    allTrafficCamImages.push(trafficCamImage);
-  }
-
-  rImg = int(random(allTrafficCamImages.length));
-
-  print(carCrashesTable.get(0, "first_road_surface"));
-
+  createCanvas(800, 800 / aspectRatio);
+  potholes = citizenRequestTable.findRows("POTHOLE", "typename");
 }
 
 function draw() {
-  background(220);
-  image(allTrafficCamImages[rImg], 0, 0);
-  ellipse(200, 200, 50, 50);
+  background(0);
+  noStroke();
+
+  fill(255, 255, 255, 100);
+  
+  for (let i = 0; i < potholes.length; i++) {
+    let x = map(potholes[i].obj.longitude, cityBounds.minLon, cityBounds.maxLon, 0, width);
+    let y = map(potholes[i].obj.latitude, cityBounds.minLat, cityBounds.maxLat, height, 0);
+    circle(x, y, 25);
+  }
+
+  let lsuX = map(lsuCoords.longitude, cityBounds.minLon, cityBounds.maxLon, 0, width);
+  let lsuY = map(lsuCoords.latitude, cityBounds.minLat, cityBounds.maxLat, height, 0);
+  fill(128, 0, 128);
+  circle(lsuX, lsuY, 25);
 }
