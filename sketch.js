@@ -3,9 +3,7 @@ let trafficCams;
 let bananaNumber;
 
 function preload() {
-  // Load data from a file
   table = loadTable("fruit.csv", "header");
-  trafficCams = loadTable("https://data.brla.gov/resource/6z6u-ts44.csv", "header");
 }
 
 function setup() {
