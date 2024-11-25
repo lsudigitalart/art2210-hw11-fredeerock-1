@@ -1,6 +1,5 @@
 let table;
-let trafficCams;
-let bananaNumber;
+let bananaNumber, strawberryNumber, appleNumber;
 
 function preload() {
   table = loadTable("fruit.csv", "header");
@@ -9,7 +8,6 @@ function preload() {
 function setup() {
   createCanvas(400, 400);
   print("fuit table has this many rows: " + table.getRowCount());
-  print("trafficCams table has this many rows: " + trafficCams.getRowCount());
   appleNumber = table.get(0, "Consumed");
   bananaNumber = table.get(1, "Consumed");
   strawberryNumber = table.get(2, "Consumed");
