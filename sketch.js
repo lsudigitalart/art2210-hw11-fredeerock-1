@@ -25,7 +25,7 @@ function setup() {
 }
 
 function draw() {
-  background(220);
-  image(allTrafficCamImages[rImg], 0, 0);
-  ellipse(200, 200, 50, 50);
+  // background(220);
+  // image(allTrafficCamImages[rImg], 0, 0);
+  // ellipse(200, 200, 50, 50);
 }
